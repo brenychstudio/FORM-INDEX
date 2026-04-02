@@ -2,7 +2,9 @@ import { motion } from "motion/react";
 import type { ReactNode } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import type { Img } from "../data/assets";
-import { homeHref, pageLinks, sectionForPath } from "../app/navigation";
+import { getPageLinks, homeHref, sectionForPath } from "../app/navigation";
+import { useLanguage } from "../i18n/LanguageContext";
+import { uiCopy } from "../i18n/copy";
 
 type SectionPageShellProps = {
   eyebrow: string;
@@ -29,10 +31,12 @@ export default function SectionPageShell({
 }: SectionPageShellProps) {
   const location = useLocation();
   const navigate = useNavigate();
+  const { lang } = useLanguage();
+  const t = uiCopy[lang];
 
   const currentSection = sectionForPath(location.pathname);
   const backHref = homeHref(currentSection);
-  const siblingPages = pageLinks.filter((item) => item.href !== location.pathname);
+  const siblingPages = getPageLinks(lang).filter((item) => item.href !== location.pathname);
 
   function handleBackToIndex(event: React.MouseEvent<HTMLAnchorElement>) {
     const targetHash = currentSection === "intro" ? "" : `#${currentSection}`;
@@ -78,11 +82,11 @@ export default function SectionPageShell({
               onClick={handleBackToIndex}
               className="text-[10px] tracking-[0.22em] text-zinc-400 transition hover:text-zinc-800"
             >
-              BACK TO INDEX
+              {t.backToIndex}
             </Link>
 
             <div className="hidden text-[10px] tracking-[0.24em] text-zinc-400 md:block">
-              FORM INDEX
+              {t.formIndex}
             </div>
           </div>
 

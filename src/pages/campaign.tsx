@@ -1,6 +1,8 @@
 import { motion } from "motion/react";
 import SectionPageShell from "./SectionPageShell";
 import { assets } from "../data/assets";
+import { useLanguage } from "../i18n/LanguageContext";
+import { pageCopy } from "../i18n/copy";
 
 const campaignHero = assets.campaignCover ?? assets.campaign01;
 
@@ -71,12 +73,15 @@ function NoteBlock({
 }
 
 export default function CampaignPage() {
+  const { lang } = useLanguage();
+  const c = pageCopy.campaign[lang];
+
   return (
     <SectionPageShell
-      eyebrow="CAMPAIGN"
-      title="Campaign system"
-      intro="A wider editorial field built around atmosphere, spacing, and visual presence. Unlike the portrait-led lookbook, this page should feel more cinematic and spatial - closer to a campaign spread than a sequence of product frames."
-      meta="Wide editorials / quiet atmosphere / spread-based rhythm"
+      eyebrow={c.shell.eyebrow}
+      title={c.shell.title}
+      intro={c.shell.intro}
+      meta={c.shell.meta}
       hero={campaignHero}
       heroFit="cover"
       heroClassName="bg-[linear-gradient(180deg,rgba(248,248,247,0.96),rgba(241,241,239,0.92))]"
@@ -89,13 +94,11 @@ export default function CampaignPage() {
             transition={{ duration: 0.66, ease: [0.22, 1, 0.36, 1] }}
           >
             <div className="text-[10px] tracking-[0.24em] text-zinc-400">
-              CAMPAIGN NOTE
+              {c.noteLabel}
             </div>
 
             <p className="mt-5 max-w-[36ch] text-[15px] leading-8 text-zinc-600">
-              This layer should open the system up. The emphasis is on wider image breathing room,
-              group presence, softer pacing, and the feeling of a composed campaign spread rather
-              than a sequence of upright studies.
+              {c.noteText}
             </p>
           </motion.div>
 
@@ -106,16 +109,16 @@ export default function CampaignPage() {
             className="grid gap-3 sm:grid-cols-2"
           >
             <div className="rounded-[24px] border border-zinc-200/80 bg-white/96 px-4 py-4 shadow-[0_8px_24px_rgba(0,0,0,0.02)]">
-              <div className="text-[10px] tracking-[0.24em] text-zinc-400">WIDE SPREAD</div>
+              <div className="text-[10px] tracking-[0.24em] text-zinc-400">{c.wideSpreadLabel}</div>
               <div className="mt-3 text-sm leading-7 text-zinc-600">
-                Larger horizontal fields, softer image drift, more air around the scene.
+                {c.wideSpreadText}
               </div>
             </div>
 
             <div className="rounded-[24px] border border-zinc-200/80 bg-white/96 px-4 py-4 shadow-[0_8px_24px_rgba(0,0,0,0.02)]">
-              <div className="text-[10px] tracking-[0.24em] text-zinc-400">PACING</div>
+              <div className="text-[10px] tracking-[0.24em] text-zinc-400">{c.pacingLabel}</div>
               <div className="mt-3 text-sm leading-7 text-zinc-600">
-                Campaign rhythm should feel composed and cinematic, not dense or merch-driven.
+                {c.pacingText}
               </div>
             </div>
           </motion.div>
@@ -133,8 +136,8 @@ export default function CampaignPage() {
 
           <div className="grid gap-6 md:grid-cols-[minmax(0,0.38fr)_minmax(0,0.62fr)] md:gap-8">
             <NoteBlock
-              label="ATMOSPHERE"
-              text="The first transition after the hero should create a pause, not a drop in energy. Text acts as a quiet editorial hinge between large spreads."
+              label={c.atmosphereLabel}
+              text={c.atmosphereText}
               delay={0.03}
             />
 
@@ -180,8 +183,8 @@ export default function CampaignPage() {
           ) : null}
 
           <NoteBlock
-            label="SPREAD LOGIC"
-            text="Unlike the lookbook, campaign framing can be broader and more atmospheric. The page should still stay restrained, but allow a slightly fuller visual field."
+            label={c.spreadLogicLabel}
+            text={c.spreadLogicText}
             delay={0.07}
           />
         </section>

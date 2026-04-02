@@ -1,4 +1,6 @@
 import type { StageItem } from "../../data/assets";
+import { useLanguage } from "../../i18n/LanguageContext";
+import { uiCopy } from "../../i18n/copy";
 
 type ProgressMap = Partial<Record<string, number>>;
 
@@ -9,6 +11,9 @@ type Props = {
 };
 
 export default function IndexNav({ items, activeId, progress }: Props) {
+  const { lang } = useLanguage();
+  const t = uiCopy[lang];
+
   function scrollToSection(id: string) {
     const el = document.getElementById(id);
     if (!el) return;
@@ -20,7 +25,7 @@ export default function IndexNav({ items, activeId, progress }: Props) {
   return (
     <div className="lg:sticky lg:top-16 lg:z-40">
       <div className="mb-3 text-[10px] tracking-[0.22em] text-zinc-500 md:mb-4 md:text-xs lg:mb-3">
-        INDEX
+        {t.index}
       </div>
 
       <div className="rounded-[24px] border border-zinc-200/70 bg-white/72 shadow-[0_10px_28px_rgba(0,0,0,0.035)] backdrop-blur-sm md:rounded-[26px] lg:max-w-[292px] lg:rounded-[15px]">

@@ -1,6 +1,8 @@
 import { motion } from "motion/react";
 import SectionPageShell from "./SectionPageShell";
 import { assets } from "../data/assets";
+import { useLanguage } from "../i18n/LanguageContext";
+import { pageCopy } from "../i18n/copy";
 
 const texturesHero = assets.texturesCover ?? assets.textures01;
 
@@ -69,12 +71,15 @@ function TextureNote({
 }
 
 export default function TexturesPage() {
+  const { lang } = useLanguage();
+  const c = pageCopy.textures[lang];
+
   return (
     <SectionPageShell
-      eyebrow="TEXTURES"
-      title="Surface studies"
-      intro="A quieter material page built around softness, grain, fold, and controlled shadow. Unlike the portrait, campaign, or product layers, this page should feel observational and tactile - closer to a study of surface than to an image-led story."
-      meta="Material crops / quiet macro studies / tactile editorial rhythm"
+      eyebrow={c.shell.eyebrow}
+      title={c.shell.title}
+      intro={c.shell.intro}
+      meta={c.shell.meta}
       hero={texturesHero}
       heroFit="cover"
       heroClassName="bg-[linear-gradient(180deg,rgba(248,248,247,0.96),rgba(241,241,239,0.93))]"
@@ -87,13 +92,11 @@ export default function TexturesPage() {
             transition={{ duration: 0.64, ease: [0.22, 1, 0.36, 1] }}
           >
             <div className="text-[10px] tracking-[0.24em] text-zinc-400">
-              MATERIAL NOTE
+              {c.noteLabel}
             </div>
 
             <p className="mt-5 max-w-[36ch] text-[15px] leading-8 text-zinc-600">
-              This page slows the system down. The role of the imagery is not to stage a scene, but
-              to hold attention on surface, density, light absorption, softness, and the way fabric
-              becomes an atmosphere on its own.
+              {c.noteText}
             </p>
           </motion.div>
 
@@ -104,16 +107,16 @@ export default function TexturesPage() {
             className="grid gap-3 sm:grid-cols-2"
           >
             <div className="rounded-[24px] border border-zinc-200/80 bg-white/96 px-4 py-4 shadow-[0_8px_24px_rgba(0,0,0,0.02)]">
-              <div className="text-[10px] tracking-[0.24em] text-zinc-400">GRAIN</div>
+              <div className="text-[10px] tracking-[0.24em] text-zinc-400">{c.grainLabel}</div>
               <div className="mt-3 text-sm leading-7 text-zinc-600">
-                The crop should carry tactile information without becoming noisy.
+                {c.grainText}
               </div>
             </div>
 
             <div className="rounded-[24px] border border-zinc-200/80 bg-white/96 px-4 py-4 shadow-[0_8px_24px_rgba(0,0,0,0.02)]">
-              <div className="text-[10px] tracking-[0.24em] text-zinc-400">FOLD</div>
+              <div className="text-[10px] tracking-[0.24em] text-zinc-400">{c.foldLabel}</div>
               <div className="mt-3 text-sm leading-7 text-zinc-600">
-                Shape emerges through softness, shadow, and gradual transitions.
+                {c.foldText}
               </div>
             </div>
           </motion.div>
@@ -140,8 +143,8 @@ export default function TexturesPage() {
             ) : null}
 
             <TextureNote
-              label="OBSERVATION"
-              text="The secondary column should read like a margin note in a material journal - quieter, smaller, and supportive rather than competitive."
+              label={c.observationLabel}
+              text={c.observationText}
               delay={0.08}
             />
           </div>
@@ -169,8 +172,8 @@ export default function TexturesPage() {
 
         <section className="grid gap-6 md:grid-cols-[minmax(0,0.36fr)_minmax(0,0.64fr)] md:gap-8">
           <TextureNote
-            label="SOFT FIELD"
-            text="This layer should feel the least narrative of all four pages. It is about texture as atmosphere, not texture as supporting detail."
+            label={c.softFieldLabel}
+            text={c.softFieldText}
             delay={0.03}
           />
 

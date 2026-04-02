@@ -1,6 +1,8 @@
 import { AnimatePresence, motion } from "motion/react";
 import { Link } from "react-router-dom";
 import type { StageRouteItem } from "../../data/stage";
+import { useLanguage } from "../../i18n/LanguageContext";
+import { uiCopy } from "../../i18n/copy";
 
 function clamp01(x: number) {
   return Math.max(0, Math.min(1, x));
@@ -21,6 +23,8 @@ type Props = {
 };
 
 export default function StickyStage({ item, progress = {} }: Props) {
+  const { lang } = useLanguage();
+  const t = uiCopy[lang];
   if (!item) return null;
   const currentItem = item;
 
@@ -37,7 +41,7 @@ export default function StickyStage({ item, progress = {} }: Props) {
     <div className="mb-8 lg:mb-0 lg:sticky lg:top-16">
       <div className="relative h-[500px] overflow-hidden rounded-[28px] border border-zinc-200/80 bg-[linear-gradient(180deg,rgba(255,255,255,0.98),rgba(247,247,246,0.94))] shadow-[0_20px_64px_rgba(0,0,0,0.05)] md:h-[620px] md:rounded-[30px] lg:h-[calc(100vh-5rem)] lg:rounded-[32px]">
         <div className="flex items-center justify-between px-4 py-4 md:px-5 md:py-4 lg:px-6 lg:py-5">
-          <div className="text-[10px] tracking-[0.24em] text-zinc-400">FORM INDEX</div>
+          <div className="text-[10px] tracking-[0.24em] text-zinc-400">{t.formIndex}</div>
           <div className="font-mono text-[10px] tabular-nums tracking-[0.24em] text-zinc-400">
             {pad3(Math.round(p * 100))}%
           </div>
@@ -59,7 +63,7 @@ export default function StickyStage({ item, progress = {} }: Props) {
                 to={currentItem.href}
                 className="relative inline-flex items-center text-[10px] tracking-[0.24em] text-zinc-400 transition-[color,opacity] duration-300 hover:text-zinc-900 hover:opacity-90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-zinc-300/70 after:absolute after:bottom-[-2px] after:left-0 after:h-[1px] after:w-0 after:bg-current after:transition-[width] after:duration-300 hover:after:w-full"
               >
-                OPEN SECTION
+                {t.openSection}
               </Link>
             </div>
           )}

@@ -2,6 +2,8 @@ import { motion } from "motion/react";
 import { Link } from "react-router-dom";
 import type { StageRouteItem } from "../../data/stage";
 import { campaign, lookbook, products, textures } from "../../data/assets";
+import { useLanguage } from "../../i18n/LanguageContext";
+import { uiCopy } from "../../i18n/copy";
 
 function clamp01(x: number) {
   return Math.max(0, Math.min(1, x));
@@ -41,6 +43,8 @@ export default function DemoSection({
 }) {
   const p = easeOutCubic(clamp01(progress));
   const frames = getFrames(item);
+  const { lang } = useLanguage();
+  const t = uiCopy[lang];
 
   const portrait = item.id === "lookbook" || item.id === "product";
   const fitCls = portrait ? "object-contain" : "object-cover";
@@ -107,7 +111,7 @@ export default function DemoSection({
             to={item.href}
             className="relative inline-flex items-center text-[11px] tracking-[0.18em] text-neutral-400 transition-[color,opacity] duration-300 hover:text-neutral-900 hover:opacity-90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-zinc-300/70 after:absolute after:bottom-[-2px] after:left-0 after:h-[1px] after:w-0 after:bg-current after:transition-[width] after:duration-300 hover:after:w-full"
           >
-            OPEN PAGE
+            {t.openPage}
           </Link>
         </div>
       )}

@@ -1,6 +1,8 @@
 import { motion } from "motion/react";
 import SectionPageShell from "./SectionPageShell";
 import { assets } from "../data/assets";
+import { useLanguage } from "../i18n/LanguageContext";
+import { pageCopy } from "../i18n/copy";
 
 const lookbookHero = assets.lookbookCover ?? assets.lookbook01;
 
@@ -81,12 +83,15 @@ function VolumeHeader({
 }
 
 export default function LookbookPage() {
+  const { lang } = useLanguage();
+  const c = pageCopy.lookbook[lang];
+
   return (
     <SectionPageShell
-      eyebrow="LOOKBOOK"
-      title="Lookbook volumes"
-      intro="Two distinct editorial sets build the lookbook layer: one studies structure and silhouette discipline, the other opens into softer volume and quieter spacing. Together they should feel like a composed publication, not a standard gallery."
-      meta="V01 Structure / V02 Volume / portrait-led editorial sequencing"
+      eyebrow={c.shell.eyebrow}
+      title={c.shell.title}
+      intro={c.shell.intro}
+      meta={c.shell.meta}
       hero={lookbookHero}
       heroFit="contain"
       heroClassName="bg-[linear-gradient(180deg,rgba(250,250,249,0.96),rgba(242,242,240,0.92))]"
@@ -99,13 +104,11 @@ export default function LookbookPage() {
             transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
           >
             <div className="text-[10px] tracking-[0.24em] text-zinc-400">
-              EDITORIAL PRINCIPLE
+              {c.principleLabel}
             </div>
 
             <p className="mt-5 max-w-[34ch] text-[15px] leading-8 text-zinc-600">
-              The lookbook should not read as one flat archive. It is split into two curated
-              movements: a stricter structural study and a softer volume study. This separation
-              gives the page hierarchy, rhythm, and a more publication-like feeling.
+              {c.principleText}
             </p>
           </motion.div>
 
@@ -116,16 +119,16 @@ export default function LookbookPage() {
             className="grid gap-3 sm:grid-cols-2"
           >
             <div className="rounded-[24px] border border-zinc-200/80 bg-white/96 px-4 py-4 shadow-[0_8px_24px_rgba(0,0,0,0.02)]">
-              <div className="text-[10px] tracking-[0.24em] text-zinc-400">V01 / STRUCTURE</div>
+              <div className="text-[10px] tracking-[0.24em] text-zinc-400">{c.structureCardLabel}</div>
               <div className="mt-3 text-sm leading-7 text-zinc-600">
-                Sharper silhouette discipline, cleaner containment, editorial restraint.
+                {c.structureCardText}
               </div>
             </div>
 
             <div className="rounded-[24px] border border-zinc-200/80 bg-white/96 px-4 py-4 shadow-[0_8px_24px_rgba(0,0,0,0.02)]">
-              <div className="text-[10px] tracking-[0.24em] text-zinc-400">V02 / VOLUME</div>
+              <div className="text-[10px] tracking-[0.24em] text-zinc-400">{c.volumeCardLabel}</div>
               <div className="mt-3 text-sm leading-7 text-zinc-600">
-                Softer massing, looser spacing, quieter atmosphere and drift.
+                {c.volumeCardText}
               </div>
             </div>
           </motion.div>
@@ -133,9 +136,9 @@ export default function LookbookPage() {
 
         <section className="space-y-8 md:space-y-10">
           <VolumeHeader
-            label="V01"
-            title="Structure"
-            note="The first set is more restrained and architectural. Frames should feel upright, measured, and clean, with enough air around the body to emphasize silhouette logic rather than spectacle."
+            label={c.v01.label}
+            title={c.v01.title}
+            note={c.v01.note}
           />
 
           <div className="grid gap-6 md:grid-cols-[minmax(0,0.62fr)_minmax(0,0.38fr)] md:gap-8">
@@ -162,10 +165,9 @@ export default function LookbookPage() {
                 transition={{ duration: 0.64, ease: [0.22, 1, 0.36, 1], delay: 0.08 }}
                 className="rounded-[28px] border border-zinc-200/80 bg-[linear-gradient(180deg,rgba(252,252,251,0.98),rgba(246,246,244,0.965))] px-6 py-7 shadow-[0_10px_28px_rgba(0,0,0,0.028)]"
               >
-                <div className="text-[10px] tracking-[0.24em] text-zinc-400">STRUCTURE NOTE</div>
+                <div className="text-[10px] tracking-[0.24em] text-zinc-400">{c.structureNoteLabel}</div>
                 <p className="mt-4 max-w-[26ch] text-sm leading-7 text-zinc-600">
-                  The companion column acts as a pause and keeps the page from becoming just a list
-                  of verticals. It preserves editorial cadence.
+                  {c.structureNoteText}
                 </p>
               </motion.div>
             </div>
@@ -191,10 +193,9 @@ export default function LookbookPage() {
                 transition={{ duration: 0.64, ease: [0.22, 1, 0.36, 1] }}
                 className="rounded-[28px] border border-zinc-200/80 bg-[linear-gradient(180deg,rgba(252,252,251,0.98),rgba(246,246,244,0.965))] px-6 py-7 shadow-[0_10px_28px_rgba(0,0,0,0.028)]"
               >
-                <div className="text-[10px] tracking-[0.24em] text-zinc-400">SEQUENCE</div>
+                <div className="text-[10px] tracking-[0.24em] text-zinc-400">{c.sequenceLabel}</div>
                 <p className="mt-4 max-w-[26ch] text-sm leading-7 text-zinc-600">
-                  Volume one closes with a calmer continuation rather than a climax. The feeling
-                  should stay composed, measured, and architectural.
+                  {c.sequenceText}
                 </p>
               </motion.div>
 
@@ -209,9 +210,9 @@ export default function LookbookPage() {
 
         <section className="space-y-8 md:space-y-10">
           <VolumeHeader
-            label="V02"
-            title="Volume"
-            note="The second set opens the system slightly. There is still restraint, but the shapes carry more softness and mass. The page should feel quieter, fuller, and more atmospheric."
+            label={c.v02.label}
+            title={c.v02.title}
+            note={c.v02.note}
           />
 
           <div className="grid gap-6 md:grid-cols-2 md:gap-8">
@@ -230,10 +231,9 @@ export default function LookbookPage() {
               transition={{ duration: 0.64, ease: [0.22, 1, 0.36, 1] }}
               className="rounded-[28px] border border-zinc-200/80 bg-[linear-gradient(180deg,rgba(252,252,251,0.98),rgba(246,246,244,0.965))] px-6 py-7 shadow-[0_10px_28px_rgba(0,0,0,0.028)]"
             >
-              <div className="text-[10px] tracking-[0.24em] text-zinc-400">VOLUME NOTE</div>
+              <div className="text-[10px] tracking-[0.24em] text-zinc-400">{c.volumeNoteLabel}</div>
               <p className="mt-4 max-w-[26ch] text-sm leading-7 text-zinc-600">
-                This block should feel less structural and slightly more atmospheric, while keeping
-                the same quiet editorial discipline.
+                {c.volumeNoteText}
               </p>
             </motion.div>
 

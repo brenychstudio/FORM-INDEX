@@ -1,16 +1,19 @@
 import { useEffect, useMemo } from "react";
 import { useLocation } from "react-router-dom";
-import { stageItems } from "../data/stage";
+import { getStageItems } from "../data/stage";
 import { useActiveSection } from "../hooks/useActiveSection";
 import { useSectionProgress } from "../hooks/useSectionProgress";
 import IndexNav from "../components/index/IndexNav";
 import StickyStage from "../components/stage/StickyStage";
 import DemoSection from "../components/sections/DemoSection";
+import { useLanguage } from "../i18n/LanguageContext";
 
 export default function Home() {
   const location = useLocation();
+  const { lang } = useLanguage();
 
-  const ids = useMemo(() => stageItems.map((it) => it.id), []);
+  const stageItems = useMemo(() => getStageItems(lang), [lang]);
+  const ids = useMemo(() => stageItems.map((it) => it.id), [stageItems]);
 
   const activeId = useActiveSection(ids);
   const progress = useSectionProgress(ids);

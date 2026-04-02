@@ -1,6 +1,8 @@
 import { motion } from "motion/react";
 import SectionPageShell from "./SectionPageShell";
 import { assets } from "../data/assets";
+import { useLanguage } from "../i18n/LanguageContext";
+import { pageCopy } from "../i18n/copy";
 
 const productHero = assets.productCover ?? assets.product01;
 
@@ -71,12 +73,15 @@ function ProductNote({
 }
 
 export default function ProductPage() {
+  const { lang } = useLanguage();
+  const c = pageCopy.product[lang];
+
   return (
     <SectionPageShell
-      eyebrow="PRODUCT"
-      title="Product images"
-      intro="A quieter object layer focused on silhouette precision, crafted surfaces, and controlled framing. The page should feel closer to editorial product study than to a conventional commerce detail page."
-      meta="Object studies / material focus / clean containment"
+      eyebrow={c.shell.eyebrow}
+      title={c.shell.title}
+      intro={c.shell.intro}
+      meta={c.shell.meta}
       hero={productHero}
       heroFit="contain"
       heroClassName="bg-[linear-gradient(180deg,rgba(250,250,249,0.97),rgba(243,243,241,0.93))]"
@@ -89,13 +94,11 @@ export default function ProductPage() {
             transition={{ duration: 0.64, ease: [0.22, 1, 0.36, 1] }}
           >
             <div className="text-[10px] tracking-[0.24em] text-zinc-400">
-              OBJECT STUDY
+              {c.studyLabel}
             </div>
 
             <p className="mt-5 max-w-[36ch] text-[15px] leading-8 text-zinc-600">
-              This page is less about narrative spread and more about precision. Images should feel
-              carefully held in space, with enough quiet around them to let proportion, seam logic,
-              and material character carry the attention.
+              {c.studyText}
             </p>
           </motion.div>
 
@@ -106,16 +109,16 @@ export default function ProductPage() {
             className="grid gap-3 sm:grid-cols-2"
           >
             <div className="rounded-[24px] border border-zinc-200/80 bg-white/96 px-4 py-4 shadow-[0_8px_24px_rgba(0,0,0,0.02)]">
-              <div className="text-[10px] tracking-[0.24em] text-zinc-400">DETAIL</div>
+              <div className="text-[10px] tracking-[0.24em] text-zinc-400">{c.detailLabel}</div>
               <div className="mt-3 text-sm leading-7 text-zinc-600">
-                Cleaner framing, closer reading, less atmospheric distance.
+                {c.detailText}
               </div>
             </div>
 
             <div className="rounded-[24px] border border-zinc-200/80 bg-white/96 px-4 py-4 shadow-[0_8px_24px_rgba(0,0,0,0.02)]">
-              <div className="text-[10px] tracking-[0.24em] text-zinc-400">SURFACE</div>
+              <div className="text-[10px] tracking-[0.24em] text-zinc-400">{c.surfaceLabel}</div>
               <div className="mt-3 text-sm leading-7 text-zinc-600">
-                The page should privilege material discipline over merchandising cues.
+                {c.surfaceText}
               </div>
             </div>
           </motion.div>
@@ -142,8 +145,8 @@ export default function ProductPage() {
             ) : null}
 
             <ProductNote
-              label="CRAFT NOTE"
-              text="The secondary column works as a controlled pause. It keeps the product layer from collapsing into a simple tiled gallery."
+              label={c.craftLabel}
+              text={c.craftText}
               delay={0.08}
             />
           </div>
@@ -171,8 +174,8 @@ export default function ProductPage() {
 
         <section className="grid gap-6 md:grid-cols-[minmax(0,0.36fr)_minmax(0,0.64fr)] md:gap-8">
           <ProductNote
-            label="CONTAINMENT"
-            text="This is still not a store template. The product page should feel curated, sparse, and editorial - closer to a design study than to checkout logic."
+            label={c.containmentLabel}
+            text={c.containmentText}
             delay={0.03}
           />
 

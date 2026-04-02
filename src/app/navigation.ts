@@ -1,3 +1,6 @@
+import type { Lang } from "../i18n/LanguageContext";
+import { pageLabels } from "../i18n/copy";
+
 export type HomeSectionId =
   | "intro"
   | "textures"
@@ -13,12 +16,15 @@ export const routeToSection: Record<string, HomeSectionId> = {
   "/product": "product",
 };
 
-export const pageLinks = [
-  { id: "textures" as const, label: "Textures", href: "/textures" },
-  { id: "campaign" as const, label: "Campaign", href: "/campaign" },
-  { id: "lookbook" as const, label: "Lookbook", href: "/lookbook" },
-  { id: "product" as const, label: "Product", href: "/product" },
-];
+export function getPageLinks(lang: Lang) {
+  const labels = pageLabels[lang];
+  return [
+    { id: "textures" as const, label: labels.textures, href: "/textures" },
+    { id: "campaign" as const, label: labels.campaign, href: "/campaign" },
+    { id: "lookbook" as const, label: labels.lookbook, href: "/lookbook" },
+    { id: "product" as const, label: labels.product, href: "/product" },
+  ];
+}
 
 export function sectionForPath(pathname: string): HomeSectionId {
   return routeToSection[pathname] ?? "intro";

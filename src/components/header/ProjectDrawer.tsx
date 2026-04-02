@@ -1,8 +1,10 @@
 import { useEffect, useMemo, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { collectionItems } from "../../data/collection";
-import { stageItems } from "../../data/stage";
+import { getCollectionItems } from "../../data/collection";
+import { useLanguage } from "../../i18n/LanguageContext";
+import { getPageLinks } from "../../app/navigation";
+import { statusLabel, uiCopy } from "../../i18n/copy";
 
 type Props = {
   open: boolean;
@@ -20,17 +22,9 @@ const collectionToStageId: Record<string, string> = {
   "fi-02": "textures",
   "fi-03": "lookbook",
   "fi-04": "product",
-  // add more mappings here when you extend the Collection
 };
 
-function StatusPill({ status }: { status: string }) {
-  const label =
-    status === "made_to_order"
-      ? "Made to order"
-      : status === "sold_out"
-      ? "Sold out"
-      : "Available";
-
+function StatusPill({ status, lang }: { status: string; lang: "en" | "es" }) {
   return (
     <span
       className={[
@@ -39,18 +33,17 @@ function StatusPill({ status }: { status: string }) {
         statusStyles[status] ?? "border-zinc-200 bg-white text-zinc-700",
       ].join(" ")}
     >
-      {label}
+      {statusLabel(lang, status)}
     </span>
   );
 }
 
-const INQUIRE_EMAIL = "info@brenych.com";
-const sectionLinks = stageItems.filter((item) => item.href && item.href !== "/");
+const INQUIRE_EMAIL = "artproject@concept2048.com";
 
 function buildMailto(itemId: string, itemName: string) {
-  const subject = encodeURIComponent(`Collection inquiry — ${itemName}`);
+  const subject = encodeURIComponent(`Collection inquiry - ${itemName}`);
   const body = encodeURIComponent(
-    `Hello,\n\nI'm interested in:\n— ${itemName} (${itemId})\n\nSize / availability / details:\n\nThank you.`
+    `Hello,\n\nI'm interested in:\n- ${itemName} (${itemId})\n\nSize / availability / details:\n\nThank you.`
   );
   return `mailto:${INQUIRE_EMAIL}?subject=${subject}&body=${body}`;
 }
@@ -59,6 +52,10 @@ export default function ProjectDrawer({ open, onClose }: Props) {
   const [tab, setTab] = useState<"collection" | "info">("collection");
   const navigate = useNavigate();
   const location = useLocation();
+  const { lang } = useLanguage();
+  const t = uiCopy[lang];
+  const collectionItems = useMemo(() => getCollectionItems(lang), [lang]);
+  const sectionLinks = useMemo(() => getPageLinks(lang), [lang]);
 
   useEffect(() => {
     if (!open) return;
@@ -76,10 +73,10 @@ export default function ProjectDrawer({ open, onClose }: Props) {
 
   const tabs = useMemo(
     () => [
-      { id: "collection" as const, label: "Collection" },
-      { id: "info" as const, label: "Info" },
+      { id: "collection" as const, label: t.collection },
+      { id: "info" as const, label: t.infoTab },
     ],
-    []
+    [t.collection, t.infoTab]
   );
 
   return (
@@ -91,7 +88,6 @@ export default function ProjectDrawer({ open, onClose }: Props) {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
         >
-          {/* overlay */}
           <button
             type="button"
             aria-label="Close"
@@ -99,7 +95,6 @@ export default function ProjectDrawer({ open, onClose }: Props) {
             className="absolute inset-0 bg-white/28 backdrop-blur-[6px] transition-opacity duration-300"
           />
 
-          {/* panel */}
           <motion.aside
             className="absolute right-0 top-0 h-full w-[min(92vw,520px)] overflow-hidden rounded-l-[24px] border-l border-neutral-200/70 bg-white/62 backdrop-blur-xl shadow-[0_18px_48px_rgba(0,0,0,0.06)]"
             initial={{ x: 28, opacity: 0 }}
@@ -108,18 +103,17 @@ export default function ProjectDrawer({ open, onClose }: Props) {
             transition={{ duration: 0.42, ease: [0.22, 1, 0.36, 1] }}
           >
             <div className="flex h-full flex-col">
-              {/* header */}
               <div className="px-6 pt-6">
                 <div className="flex items-start justify-between gap-4">
                   <div>
                     <div className="text-[11px] tracking-[0.22em] text-zinc-500">
-                      FORM INDEX
+                      {t.formIndex}
                     </div>
                     <div className="mt-2 text-lg font-medium text-zinc-950">
-                      Selected pieces
+                      {t.selectedPieces}
                     </div>
                     <div className="mt-1 text-sm text-zinc-600">
-                      Inquiry-only. No checkout.
+                      {t.inquiryOnly}
                     </div>
                   </div>
 
@@ -128,19 +122,18 @@ export default function ProjectDrawer({ open, onClose }: Props) {
                     onClick={onClose}
                     className="rounded-full border border-zinc-200/70 bg-white/65 px-3 py-1.5 text-sm text-zinc-700 transition-[background-color,border-color,color,transform,opacity] duration-300 hover:border-zinc-300/70 hover:bg-white hover:text-zinc-950 hover:translate-y-[-1px] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-zinc-300/70"
                   >
-                    Close
+                    {t.close}
                   </button>
                 </div>
 
-                {/* tabs */}
                 <div className="mt-5 inline-flex rounded-full border border-zinc-200/70 bg-white/55 p-1">
-                  {tabs.map((t) => {
-                    const active = tab === t.id;
+                  {tabs.map((tabItem) => {
+                    const active = tab === tabItem.id;
                     return (
                       <button
-                        key={t.id}
+                        key={tabItem.id}
                         type="button"
-                        onClick={() => setTab(t.id)}
+                        onClick={() => setTab(tabItem.id)}
                         className={[
                           "rounded-full px-3 py-1.5 text-xs transition-[background-color,color,opacity,transform,box-shadow] duration-300 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-zinc-300/70",
                           active
@@ -148,7 +141,7 @@ export default function ProjectDrawer({ open, onClose }: Props) {
                             : "text-zinc-600 hover:text-zinc-900 hover:opacity-90 hover:translate-y-[-1px]",
                         ].join(" ")}
                       >
-                        {t.label}
+                        {tabItem.label}
                       </button>
                     );
                   })}
@@ -157,7 +150,6 @@ export default function ProjectDrawer({ open, onClose }: Props) {
 
               <div className="mt-6 h-px w-full bg-zinc-200/60" />
 
-              {/* body */}
               <div className="flex-1 overflow-auto px-6 py-6">
                 {tab === "collection" ? (
                   <>
@@ -240,7 +232,7 @@ export default function ProjectDrawer({ open, onClose }: Props) {
                                   </div>
 
                                   <div className="mt-2 flex items-center justify-between">
-                                    <StatusPill status={it.status} />
+                                    <StatusPill status={it.status} lang={lang} />
 
                                     <a
                                       href={buildMailto(it.id, it.name)}
@@ -253,7 +245,7 @@ export default function ProjectDrawer({ open, onClose }: Props) {
                                         "focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-zinc-300/70",
                                       ].join(" ")}
                                     >
-                                      Inquire
+                                      {t.inquire}
                                     </a>
                                   </div>
                                 </div>
@@ -266,11 +258,10 @@ export default function ProjectDrawer({ open, onClose }: Props) {
 
                     <div className="mt-6 rounded-2xl border border-zinc-200/70 bg-white/45 p-5 md:p-6">
                       <div className="text-[11px] tracking-[0.22em] text-zinc-500">
-                        NOTE
+                        {t.note}
                       </div>
                       <p className="mt-2 text-sm leading-6 text-zinc-600">
-                        This is a curated preview. For sizing, availability and
-                        custom requests — use “Inquire”.
+                        {t.collectionNote}
                       </p>
                     </div>
                   </>
@@ -278,27 +269,26 @@ export default function ProjectDrawer({ open, onClose }: Props) {
                   <div className="space-y-4">
                     <div className="rounded-2xl border border-zinc-200/70 bg-white/45 p-5 md:p-6">
                       <div className="text-[11px] tracking-[0.22em] text-zinc-500">
-                        INFO
+                        {t.infoLabel}
                       </div>
                       <p className="mt-2 text-sm leading-6 text-zinc-600">
-                        A quiet futurism capsule: material studies, editorial
-                        silhouettes, and controlled motion language.
+                        {t.infoText}
                       </p>
                     </div>
 
                     <div className="rounded-2xl border border-zinc-200/70 bg-white/45 p-5 md:p-6">
                       <div className="text-[11px] tracking-[0.22em] text-zinc-500">
-                        PAGES
+                        {t.pages}
                       </div>
                       <div className="mt-3 flex flex-wrap gap-2">
                         {sectionLinks.map((item) => (
                           <Link
                             key={item.id}
-                            to={item.href!}
+                            to={item.href}
                             onClick={() => onClose()}
                             className="rounded-full border border-zinc-200/80 bg-white/72 px-3 py-1.5 text-[11px] tracking-[0.18em] text-zinc-600 transition-[background-color,border-color,color,transform,opacity] duration-300 hover:border-zinc-300/70 hover:bg-white hover:text-zinc-900 hover:translate-y-[-1px] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-zinc-300/70"
                           >
-                            {item.indexTitle}
+                            {item.label}
                           </Link>
                         ))}
                       </div>
@@ -306,10 +296,10 @@ export default function ProjectDrawer({ open, onClose }: Props) {
 
                     <div className="rounded-2xl border border-zinc-200/70 bg-white/45 p-5 md:p-6">
                       <div className="text-[11px] tracking-[0.22em] text-zinc-500">
-                        CONTACT
+                        {t.contact}
                       </div>
                       <p className="mt-2 text-sm leading-6 text-zinc-600">
-                        For inquiries:{" "}
+                        {t.contactLead}{" "}
                         <a
                           className="underline decoration-zinc-300 underline-offset-4 transition-[color,opacity,text-decoration-color] duration-300 hover:text-zinc-900 hover:decoration-zinc-500 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-zinc-300/70"
                           href={`mailto:${INQUIRE_EMAIL}`}
