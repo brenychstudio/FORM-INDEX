@@ -84,7 +84,7 @@ export default function DemoSection({
   return (
     <section id={item.id} className="scroll-mt-24 pb-24">
       <div className="text-[11px] tracking-[0.24em] text-zinc-500">
-        <ContentRefresh trigger={item.eyebrow}>{item.eyebrow}</ContentRefresh>
+        <ContentRefresh trigger={item.eyebrow ?? ""}>{item.eyebrow}</ContentRefresh>
       </div>
 
       <h2 className="mt-3 text-2xl font-medium tracking-tight text-zinc-950 lg:max-w-[270px]">

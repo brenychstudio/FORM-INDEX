@@ -1,7 +1,7 @@
 import { useEffect, useState, type ReactNode } from "react";
 
 type Props = {
-  trigger: string | number;
+  trigger: string | number | undefined | null;
   children: ReactNode;
   className?: string;
 };
