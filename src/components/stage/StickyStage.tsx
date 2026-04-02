@@ -1,5 +1,6 @@
 import { AnimatePresence, motion } from "motion/react";
 import { Link } from "react-router-dom";
+import ContentRefresh from "../ui/ContentRefresh";
 import type { StageRouteItem } from "../../data/stage";
 import { useLanguage } from "../../i18n/LanguageContext";
 import { uiCopy } from "../../i18n/copy";
@@ -49,11 +50,13 @@ export default function StickyStage({ item, progress = {} }: Props) {
 
         <div className="px-4 pb-4 md:px-5 md:pb-5 lg:px-6 lg:pb-6">
           <div className="text-base font-medium tracking-[-0.03em] text-zinc-950 md:text-lg">
-            {currentItem.title}
+            <ContentRefresh trigger={currentItem.title}>{currentItem.title}</ContentRefresh>
           </div>
           {currentItem.description && (
             <div className="mt-1.5 text-sm leading-7 text-zinc-600 md:text-[15px] md:leading-8">
-              {currentItem.description}
+              <ContentRefresh trigger={currentItem.description}>
+                {currentItem.description}
+              </ContentRefresh>
             </div>
           )}
 
@@ -63,7 +66,9 @@ export default function StickyStage({ item, progress = {} }: Props) {
                 to={currentItem.href}
                 className="relative inline-flex items-center text-[10px] tracking-[0.24em] text-zinc-400 transition-[color,opacity] duration-300 hover:text-zinc-900 hover:opacity-90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-zinc-300/70 after:absolute after:bottom-[-2px] after:left-0 after:h-[1px] after:w-0 after:bg-current after:transition-[width] after:duration-300 hover:after:w-full"
               >
-                {t.openSection}
+                <ContentRefresh trigger={`stage-link-${currentItem.id}`}>
+                  {t.openSection}
+                </ContentRefresh>
               </Link>
             </div>
           )}

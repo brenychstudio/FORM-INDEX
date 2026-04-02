@@ -1,5 +1,6 @@
 import { motion } from "motion/react";
 import { Link } from "react-router-dom";
+import ContentRefresh from "../ui/ContentRefresh";
 import type { StageRouteItem } from "../../data/stage";
 import { campaign, lookbook, products, textures } from "../../data/assets";
 import { useLanguage } from "../../i18n/LanguageContext";
@@ -82,7 +83,9 @@ export default function DemoSection({
 
   return (
     <section id={item.id} className="scroll-mt-24 pb-24">
-      <div className="text-[11px] tracking-[0.24em] text-zinc-500">{item.eyebrow}</div>
+      <div className="text-[11px] tracking-[0.24em] text-zinc-500">
+        <ContentRefresh trigger={item.eyebrow}>{item.eyebrow}</ContentRefresh>
+      </div>
 
       <h2 className="mt-3 text-2xl font-medium tracking-tight text-zinc-950 lg:max-w-[270px]">
         {item.href && item.href !== "/" ? (
@@ -90,16 +93,16 @@ export default function DemoSection({
             to={item.href}
             className="text-left transition-[color,opacity] duration-300 hover:text-zinc-700 hover:opacity-85 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-zinc-300/70"
           >
-            {item.title}
+            <ContentRefresh trigger={item.title}>{item.title}</ContentRefresh>
           </Link>
         ) : (
-          item.title
+          <ContentRefresh trigger={item.title}>{item.title}</ContentRefresh>
         )}
       </h2>
 
       {item.description && (
         <p className="mt-2 max-w-[44ch] text-sm leading-6 text-zinc-600 lg:max-w-[270px]">
-          {item.description}
+          <ContentRefresh trigger={item.description ?? ""}>{item.description}</ContentRefresh>
         </p>
       )}
 
@@ -111,7 +114,7 @@ export default function DemoSection({
             to={item.href}
             className="relative inline-flex items-center text-[11px] tracking-[0.18em] text-neutral-400 transition-[color,opacity] duration-300 hover:text-neutral-900 hover:opacity-90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-zinc-300/70 after:absolute after:bottom-[-2px] after:left-0 after:h-[1px] after:w-0 after:bg-current after:transition-[width] after:duration-300 hover:after:w-full"
           >
-            {t.openPage}
+            <ContentRefresh trigger={`open-page-${item.id}`}>{t.openPage}</ContentRefresh>
           </Link>
         </div>
       )}

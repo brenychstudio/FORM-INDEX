@@ -5,6 +5,8 @@ import { getCollectionItems } from "../../data/collection";
 import { useLanguage } from "../../i18n/LanguageContext";
 import { getPageLinks } from "../../app/navigation";
 import { statusLabel, uiCopy } from "../../i18n/copy";
+import ContentRefresh from "../ui/ContentRefresh";
+import LocalizedFade from "../ui/LocalizedFade";
 
 type Props = {
   open: boolean;
@@ -64,10 +66,14 @@ export default function ProjectDrawer({ open, onClose }: Props) {
 
   useEffect(() => {
     if (!open) return;
-    const prev = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
+
+    const body = document.body;
+    const prevOverflow = body.style.overflow;
+
+    body.style.overflow = "hidden";
+
     return () => {
-      document.body.style.overflow = prev;
+      body.style.overflow = prevOverflow;
     };
   }, [open]);
 
@@ -92,7 +98,7 @@ export default function ProjectDrawer({ open, onClose }: Props) {
             type="button"
             aria-label="Close"
             onClick={onClose}
-            className="absolute inset-0 bg-white/28 backdrop-blur-[6px] transition-opacity duration-300"
+            className="absolute inset-0 bg-white/50"
           />
 
           <motion.aside
@@ -110,10 +116,12 @@ export default function ProjectDrawer({ open, onClose }: Props) {
                       {t.formIndex}
                     </div>
                     <div className="mt-2 text-lg font-medium text-zinc-950">
-                      {t.selectedPieces}
+                      <ContentRefresh trigger={t.selectedPieces}>
+                        {t.selectedPieces}
+                      </ContentRefresh>
                     </div>
                     <div className="mt-1 text-sm text-zinc-600">
-                      {t.inquiryOnly}
+                      <ContentRefresh trigger={t.inquiryOnly}>{t.inquiryOnly}</ContentRefresh>
                     </div>
                   </div>
 
@@ -122,7 +130,9 @@ export default function ProjectDrawer({ open, onClose }: Props) {
                     onClick={onClose}
                     className="rounded-full border border-zinc-200/70 bg-white/65 px-3 py-1.5 text-sm text-zinc-700 transition-[background-color,border-color,color,transform,opacity] duration-300 hover:border-zinc-300/70 hover:bg-white hover:text-zinc-950 hover:translate-y-[-1px] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-zinc-300/70"
                   >
-                    {t.close}
+                    <LocalizedFade valueKey={`drawer-close-${lang}`}>
+                      {t.close}
+                    </LocalizedFade>
                   </button>
                 </div>
 
@@ -141,7 +151,15 @@ export default function ProjectDrawer({ open, onClose }: Props) {
                             : "text-zinc-600 hover:text-zinc-900 hover:opacity-90 hover:translate-y-[-1px]",
                         ].join(" ")}
                       >
-                        {tabItem.label}
+                        {tabItem.id === "collection" ? (
+                          <LocalizedFade valueKey={`drawer-tab-collection-${lang}`}>
+                            {t.collection}
+                          </LocalizedFade>
+                        ) : (
+                          <LocalizedFade valueKey={`drawer-tab-info-${lang}`}>
+                            {t.infoTab}
+                          </LocalizedFade>
+                        )}
                       </button>
                     );
                   })}
@@ -245,7 +263,9 @@ export default function ProjectDrawer({ open, onClose }: Props) {
                                         "focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-zinc-300/70",
                                       ].join(" ")}
                                     >
-                                      {t.inquire}
+                                      <LocalizedFade valueKey={`drawer-inquire-${lang}`}>
+                                        {t.inquire}
+                                      </LocalizedFade>
                                     </a>
                                   </div>
                                 </div>
@@ -258,10 +278,12 @@ export default function ProjectDrawer({ open, onClose }: Props) {
 
                     <div className="mt-6 rounded-2xl border border-zinc-200/70 bg-white/45 p-5 md:p-6">
                       <div className="text-[11px] tracking-[0.22em] text-zinc-500">
-                        {t.note}
+                        <ContentRefresh trigger={t.note}>{t.note}</ContentRefresh>
                       </div>
                       <p className="mt-2 text-sm leading-6 text-zinc-600">
-                        {t.collectionNote}
+                        <ContentRefresh trigger={t.collectionNote}>
+                          {t.collectionNote}
+                        </ContentRefresh>
                       </p>
                     </div>
                   </>
@@ -269,16 +291,16 @@ export default function ProjectDrawer({ open, onClose }: Props) {
                   <div className="space-y-4">
                     <div className="rounded-2xl border border-zinc-200/70 bg-white/45 p-5 md:p-6">
                       <div className="text-[11px] tracking-[0.22em] text-zinc-500">
-                        {t.infoLabel}
+                        <ContentRefresh trigger={t.infoLabel}>{t.infoLabel}</ContentRefresh>
                       </div>
                       <p className="mt-2 text-sm leading-6 text-zinc-600">
-                        {t.infoText}
+                        <ContentRefresh trigger={t.infoText}>{t.infoText}</ContentRefresh>
                       </p>
                     </div>
 
                     <div className="rounded-2xl border border-zinc-200/70 bg-white/45 p-5 md:p-6">
                       <div className="text-[11px] tracking-[0.22em] text-zinc-500">
-                        {t.pages}
+                        <ContentRefresh trigger={t.pages}>{t.pages}</ContentRefresh>
                       </div>
                       <div className="mt-3 flex flex-wrap gap-2">
                         {sectionLinks.map((item) => (
@@ -296,10 +318,10 @@ export default function ProjectDrawer({ open, onClose }: Props) {
 
                     <div className="rounded-2xl border border-zinc-200/70 bg-white/45 p-5 md:p-6">
                       <div className="text-[11px] tracking-[0.22em] text-zinc-500">
-                        {t.contact}
+                        <ContentRefresh trigger={t.contact}>{t.contact}</ContentRefresh>
                       </div>
                       <p className="mt-2 text-sm leading-6 text-zinc-600">
-                        {t.contactLead}{" "}
+                        <ContentRefresh trigger={t.contactLead}>{t.contactLead}</ContentRefresh>{" "}
                         <a
                           className="underline decoration-zinc-300 underline-offset-4 transition-[color,opacity,text-decoration-color] duration-300 hover:text-zinc-900 hover:decoration-zinc-500 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-zinc-300/70"
                           href={`mailto:${INQUIRE_EMAIL}`}

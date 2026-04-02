@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom";
 import { getStageItems } from "../data/stage";
 import { useActiveSection } from "../hooks/useActiveSection";
 import { useSectionProgress } from "../hooks/useSectionProgress";
+import Footer from "../components/layout/Footer";
 import IndexNav from "../components/index/IndexNav";
 import StickyStage from "../components/stage/StickyStage";
 import DemoSection from "../components/sections/DemoSection";
@@ -41,26 +42,30 @@ export default function Home() {
   }, [location.pathname, location.hash]);
 
   return (
-    <main className="mx-auto max-w-[1200px] px-6 pb-24 pt-10">
-      <div className="grid grid-cols-1 gap-10 lg:grid-cols-[344px_1fr]">
-        <div className="lg:pr-3">
-          <IndexNav items={stageItems} activeId={activeId} progress={progress} />
+    <>
+      <main className="mx-auto max-w-[1200px] px-6 pb-24 pt-10">
+        <div className="grid grid-cols-1 gap-10 lg:grid-cols-[344px_1fr]">
+          <div className="lg:pr-3">
+            <IndexNav items={stageItems} activeId={activeId} progress={progress} />
 
-          <div className="mt-10 lg:mt-8">
-            {stageItems.map((it) => (
-              <DemoSection
-                key={it.id}
-                item={it}
-                progress={progress[it.id] ?? 0}
-              />
-            ))}
+            <div className="mt-10 lg:mt-8">
+              {stageItems.map((it) => (
+                <DemoSection
+                  key={it.id}
+                  item={it}
+                  progress={progress[it.id] ?? 0}
+                />
+              ))}
+            </div>
+          </div>
+
+          <div className="hidden lg:block lg:pl-2">
+            <StickyStage item={activeItem} progress={progress} />
           </div>
         </div>
+      </main>
 
-        <div className="hidden lg:block lg:pl-2">
-          <StickyStage item={activeItem} progress={progress} />
-        </div>
-      </div>
-    </main>
+      <Footer />
+    </>
   );
 }

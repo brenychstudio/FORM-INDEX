@@ -1,6 +1,7 @@
 import { motion } from "motion/react";
 import type { ReactNode } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import ContentRefresh from "../components/ui/ContentRefresh";
 import type { Img } from "../data/assets";
 import { getPageLinks, homeHref, sectionForPath } from "../app/navigation";
 import { useLanguage } from "../i18n/LanguageContext";
@@ -107,22 +108,22 @@ export default function SectionPageShell({
           <div className="grid gap-8 md:grid-cols-[minmax(0,0.92fr)_minmax(280px,0.56fr)] md:gap-10 lg:gap-14">
             <div>
               <div className="text-[10px] tracking-[0.26em] text-zinc-400">
-                {eyebrow}
+                <ContentRefresh trigger={eyebrow}>{eyebrow}</ContentRefresh>
               </div>
 
               <h1 className="mt-5 max-w-[10ch] text-4xl font-medium tracking-[-0.05em] text-zinc-950 md:text-6xl lg:text-[4.5rem] lg:leading-[0.94]">
-                {title}
+                <ContentRefresh trigger={title}>{title}</ContentRefresh>
               </h1>
             </div>
 
             <div className="md:pt-1 lg:pt-2">
               <p className="max-w-[34ch] text-sm leading-7 text-zinc-600 md:text-[15px] md:leading-8">
-                {intro}
+                <ContentRefresh trigger={intro}>{intro}</ContentRefresh>
               </p>
 
               {meta ? (
                 <div className="mt-6 text-[10px] tracking-[0.24em] text-zinc-400">
-                  {meta}
+                  <ContentRefresh trigger={meta}>{meta}</ContentRefresh>
                 </div>
               ) : null}
             </div>

@@ -1,4 +1,5 @@
 import type { StageItem } from "../../data/assets";
+import ContentRefresh from "../ui/ContentRefresh";
 import { useLanguage } from "../../i18n/LanguageContext";
 import { uiCopy } from "../../i18n/copy";
 
@@ -25,7 +26,7 @@ export default function IndexNav({ items, activeId, progress }: Props) {
   return (
     <div className="lg:sticky lg:top-16 lg:z-40">
       <div className="mb-3 text-[10px] tracking-[0.22em] text-zinc-500 md:mb-4 md:text-xs lg:mb-3">
-        {t.index}
+        <ContentRefresh trigger={t.index}>{t.index}</ContentRefresh>
       </div>
 
       <div className="rounded-[24px] border border-zinc-200/70 bg-white/72 shadow-[0_10px_28px_rgba(0,0,0,0.035)] backdrop-blur-sm md:rounded-[26px] lg:max-w-[292px] lg:rounded-[15px]">
@@ -64,7 +65,7 @@ export default function IndexNav({ items, activeId, progress }: Props) {
                       isActive ? "text-zinc-950" : "text-zinc-700",
                     ].join(" ")}
                   >
-                    {it.indexTitle}
+                    <ContentRefresh trigger={it.indexTitle}>{it.indexTitle}</ContentRefresh>
                   </span>
 
                   {isActive ? (

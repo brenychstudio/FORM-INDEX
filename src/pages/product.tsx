@@ -1,4 +1,5 @@
 import { motion } from "motion/react";
+import ContentRefresh from "../components/ui/ContentRefresh";
 import SectionPageShell from "./SectionPageShell";
 import { assets } from "../data/assets";
 import { useLanguage } from "../i18n/LanguageContext";
@@ -64,9 +65,11 @@ function ProductNote({
       transition={{ duration: 0.62, ease: [0.22, 1, 0.36, 1], delay }}
       className="rounded-[28px] border border-zinc-200/80 bg-[linear-gradient(180deg,rgba(252,252,251,0.98),rgba(246,246,244,0.965))] px-6 py-7 shadow-[0_10px_28px_rgba(0,0,0,0.028)]"
     >
-      <div className="text-[10px] tracking-[0.24em] text-zinc-400">{label}</div>
+      <div className="text-[10px] tracking-[0.24em] text-zinc-400">
+        <ContentRefresh trigger={label}>{label}</ContentRefresh>
+      </div>
       <p className="mt-4 max-w-[28ch] text-sm leading-7 text-zinc-600">
-        {text}
+        <ContentRefresh trigger={text}>{text}</ContentRefresh>
       </p>
     </motion.div>
   );
@@ -94,11 +97,11 @@ export default function ProductPage() {
             transition={{ duration: 0.64, ease: [0.22, 1, 0.36, 1] }}
           >
             <div className="text-[10px] tracking-[0.24em] text-zinc-400">
-              {c.studyLabel}
+              <ContentRefresh trigger={c.studyLabel}>{c.studyLabel}</ContentRefresh>
             </div>
 
             <p className="mt-5 max-w-[36ch] text-[15px] leading-8 text-zinc-600">
-              {c.studyText}
+              <ContentRefresh trigger={c.studyText}>{c.studyText}</ContentRefresh>
             </p>
           </motion.div>
 
@@ -109,16 +112,20 @@ export default function ProductPage() {
             className="grid gap-3 sm:grid-cols-2"
           >
             <div className="rounded-[24px] border border-zinc-200/80 bg-white/96 px-4 py-4 shadow-[0_8px_24px_rgba(0,0,0,0.02)]">
-              <div className="text-[10px] tracking-[0.24em] text-zinc-400">{c.detailLabel}</div>
+              <div className="text-[10px] tracking-[0.24em] text-zinc-400">
+                <ContentRefresh trigger={c.detailLabel}>{c.detailLabel}</ContentRefresh>
+              </div>
               <div className="mt-3 text-sm leading-7 text-zinc-600">
-                {c.detailText}
+                <ContentRefresh trigger={c.detailText}>{c.detailText}</ContentRefresh>
               </div>
             </div>
 
             <div className="rounded-[24px] border border-zinc-200/80 bg-white/96 px-4 py-4 shadow-[0_8px_24px_rgba(0,0,0,0.02)]">
-              <div className="text-[10px] tracking-[0.24em] text-zinc-400">{c.surfaceLabel}</div>
+              <div className="text-[10px] tracking-[0.24em] text-zinc-400">
+                <ContentRefresh trigger={c.surfaceLabel}>{c.surfaceLabel}</ContentRefresh>
+              </div>
               <div className="mt-3 text-sm leading-7 text-zinc-600">
-                {c.surfaceText}
+                <ContentRefresh trigger={c.surfaceText}>{c.surfaceText}</ContentRefresh>
               </div>
             </div>
           </motion.div>

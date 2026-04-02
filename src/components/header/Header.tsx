@@ -1,6 +1,7 @@
 import { useState } from "react";
 import type { MouseEvent } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { motion } from "motion/react";
 import ProjectDrawer from "./ProjectDrawer";
 import { useLanguage } from "../../i18n/LanguageContext";
 import { uiCopy } from "../../i18n/copy";
@@ -32,7 +33,7 @@ export default function Header() {
 
   return (
     <>
-      <header className="sticky top-0 z-50 border-b border-zinc-200/70 bg-white/78 backdrop-blur-md">
+      <header className="sticky top-0 z-50 border-b border-zinc-200/70 bg-white/92">
         <div className="mx-auto flex max-w-[1200px] items-center justify-between px-6 py-4">
           <Link
             to="/"
@@ -42,32 +43,50 @@ export default function Header() {
             {t.formIndex}
           </Link>
 
-          <div className="flex items-center gap-3">
-            <div className="inline-flex rounded-full border border-zinc-200/70 bg-white/70 p-1">
+          <div className="flex items-center gap-2.5">
+            <div className="inline-flex items-center rounded-full border border-zinc-200/70 bg-white/72 p-1 shadow-[0_4px_14px_rgba(0,0,0,0.03)]">
               <button
                 type="button"
                 onClick={() => setLang("en")}
-                className={[
-                  "rounded-full px-2.5 py-1 text-[11px] tracking-[0.18em] transition-[background-color,color,opacity] duration-300 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-zinc-300/70",
-                  lang === "en"
-                    ? "bg-white text-zinc-900 shadow-[0_1px_6px_rgba(0,0,0,0.05)]"
-                    : "text-zinc-500 hover:text-zinc-900",
-                ].join(" ")}
+                className="relative rounded-full px-3 py-1.5 text-[11px] tracking-[0.18em] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-zinc-300/70"
               >
-                EN
+                {lang === "en" && (
+                  <motion.span
+                    layoutId="lang-pill"
+                    className="absolute inset-0 rounded-full bg-white shadow-[0_2px_10px_rgba(0,0,0,0.06)]"
+                    transition={{ type: "spring", stiffness: 380, damping: 32, mass: 0.8 }}
+                  />
+                )}
+                <span
+                  className={[
+                    "relative z-10 transition-colors duration-250",
+                    lang === "en" ? "text-zinc-900" : "text-zinc-500 hover:text-zinc-900",
+                  ].join(" ")}
+                >
+                  EN
+                </span>
               </button>
 
               <button
                 type="button"
                 onClick={() => setLang("es")}
-                className={[
-                  "rounded-full px-2.5 py-1 text-[11px] tracking-[0.18em] transition-[background-color,color,opacity] duration-300 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-zinc-300/70",
-                  lang === "es"
-                    ? "bg-white text-zinc-900 shadow-[0_1px_6px_rgba(0,0,0,0.05)]"
-                    : "text-zinc-500 hover:text-zinc-900",
-                ].join(" ")}
+                className="relative rounded-full px-3 py-1.5 text-[11px] tracking-[0.18em] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-zinc-300/70"
               >
-                ES
+                {lang === "es" && (
+                  <motion.span
+                    layoutId="lang-pill"
+                    className="absolute inset-0 rounded-full bg-white shadow-[0_2px_10px_rgba(0,0,0,0.06)]"
+                    transition={{ type: "spring", stiffness: 380, damping: 32, mass: 0.8 }}
+                  />
+                )}
+                <span
+                  className={[
+                    "relative z-10 transition-colors duration-250",
+                    lang === "es" ? "text-zinc-900" : "text-zinc-500 hover:text-zinc-900",
+                  ].join(" ")}
+                >
+                  ES
+                </span>
               </button>
             </div>
 
