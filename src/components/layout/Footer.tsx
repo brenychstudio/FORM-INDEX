@@ -15,7 +15,7 @@ export default function Footer() {
 
         <div className="flex flex-wrap items-center gap-5 text-zinc-400">
           <a
-            href="mailto:artproject@concept2048.com"
+            href="mailto:info@brenych.com"
             className="transition-[color,opacity] duration-300 hover:text-zinc-800 hover:opacity-95 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-zinc-300/70"
           >
             EMAIL

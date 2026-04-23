@@ -40,7 +40,7 @@ function StatusPill({ status, lang }: { status: string; lang: "en" | "es" }) {
   );
 }
 
-const INQUIRE_EMAIL = "artproject@concept2048.com";
+const INQUIRE_EMAIL = "info@brenych.com";
 
 function buildMailto(itemId: string, itemName: string) {
   const subject = encodeURIComponent(`Collection inquiry - ${itemName}`);
