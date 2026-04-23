@@ -7,11 +7,14 @@ import Footer from "../components/layout/Footer";
 import IndexNav from "../components/index/IndexNav";
 import StickyStage from "../components/stage/StickyStage";
 import DemoSection from "../components/sections/DemoSection";
+import ContentRefresh from "../components/ui/ContentRefresh";
 import { useLanguage } from "../i18n/LanguageContext";
+import { uiCopy } from "../i18n/copy";
 
 export default function Home() {
   const location = useLocation();
   const { lang } = useLanguage();
+  const t = uiCopy[lang];
 
   const stageItems = useMemo(() => getStageItems(lang), [lang]);
   const ids = useMemo(() => stageItems.map((it) => it.id), [stageItems]);
@@ -44,6 +47,10 @@ export default function Home() {
   return (
     <>
       <main className="mx-auto max-w-[1200px] px-6 pb-24 pt-10">
+        <div className="mb-3 text-[10px] tracking-[0.22em] text-zinc-500 md:mb-4 md:text-xs lg:mb-3">
+          <ContentRefresh trigger={t.index}>{t.index}</ContentRefresh>
+        </div>
+
         <div className="grid grid-cols-1 gap-10 lg:grid-cols-[344px_1fr]">
           <div className="lg:pr-3">
             <IndexNav items={stageItems} activeId={activeId} progress={progress} />

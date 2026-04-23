@@ -39,8 +39,8 @@ export default function StickyStage({ item, progress = {} }: Props) {
   const frameH = portrait ? "min(70vh, 680px)" : "min(62vh, 560px)";
 
   return (
-    <div className="mb-8 lg:mb-0 lg:sticky lg:top-16">
-      <div className="relative h-[500px] overflow-hidden rounded-[28px] border border-zinc-200/80 bg-[linear-gradient(180deg,rgba(255,255,255,0.98),rgba(247,247,246,0.94))] shadow-[0_20px_64px_rgba(0,0,0,0.05)] md:h-[620px] md:rounded-[30px] lg:h-[calc(100vh-5rem)] lg:rounded-[32px]">
+    <div className="mb-8 lg:mb-0 lg:sticky lg:top-20">
+      <div className="relative h-[500px] overflow-hidden rounded-[28px] border border-zinc-200/80 bg-[linear-gradient(180deg,rgba(255,255,255,0.98),rgba(247,247,246,0.94))] shadow-[0_20px_64px_rgba(0,0,0,0.05)] md:h-[620px] md:rounded-[30px] lg:h-[calc(100vh-6rem)] lg:rounded-[32px]">
         <div className="flex items-center justify-between px-4 py-4 md:px-5 md:py-4 lg:px-6 lg:py-5">
           <div className="text-[10px] tracking-[0.24em] text-zinc-400">{t.formIndex}</div>
           <div className="font-mono text-[10px] tabular-nums tracking-[0.24em] text-zinc-400">
