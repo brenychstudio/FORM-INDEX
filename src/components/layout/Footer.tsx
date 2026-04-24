@@ -30,6 +30,16 @@ export default function Footer() {
             INSTAGRAM
           </a>
 
+          <a
+            href="https://brenychstudio.com/"
+            target="_blank"
+            rel="noreferrer"
+            className="text-zinc-400 transition-[color,opacity] duration-300 hover:text-zinc-800 hover:opacity-95 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-zinc-300/70"
+            aria-label="Design and development by brenychstudio"
+          >
+            Design & development — brenychstudio
+          </a>
+
           <span className="text-zinc-400">© 2026</span>
         </div>
       </div>
